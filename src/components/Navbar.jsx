@@ -1,15 +1,25 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Navbar() {
-  const token = localStorage.getItem('sl-token');
+  const navigate = useNavigate();
+  const token = localStorage.getItem('sl-api-token');
   
+  const handleLogout = () => {
+      axios.post('/api/logout', {}, {
+        headers: { Authorization: `Bearer ${token}` }
+    }).finally(() => {
+        localStorage.removeItem('sl-api-token');
+        navigate('/login');
+    });
+  }
   return (
     <nav className="p-3 bg-primary text-white d-flex gap-3">
       <Link to="/" className="text-white">Home</Link>
       <Link to="/about" className="text-white">About</Link>
       { token ? (
         <>
-            <Link to="/logout" className="text-white">Logout</Link>
+            <a href="#" onClick={handleLogout} className="text-white">Logout</a>
         </>
         ) : (
         <>

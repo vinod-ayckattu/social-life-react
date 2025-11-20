@@ -1,9 +1,10 @@
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Register() {
 
+    const navigate = useNavigate();
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
@@ -17,8 +18,15 @@ export default function Register() {
 
     const handleSubmit = () => {
         axios.post('http://127.0.0.1:8000/api/users/store', formData)
-        .then((res) => console.log(res.data.user))
-        .catch(err => console.error(err));
+        .then((res) => { 
+            localStorage.setItem('sl-api-token', res.data.user.token);  
+            
+            navigate("/");
+        })
+        .catch(err => { 
+            console.error(err); 
+           
+        });
     };
     return (
         <div className='container d-flex justify-content-center w-100'>
