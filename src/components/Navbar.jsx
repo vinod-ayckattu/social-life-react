@@ -6,7 +6,7 @@ export default function Navbar() {
   const token = localStorage.getItem('sl-api-token');
   
   const handleLogout = () => {
-      axios.post('/api/logout', {}, {
+      axios.post('http://127.0.0.1:8000/api/logout', {}, {
         headers: { Authorization: `Bearer ${token}` }
     }).finally(() => {
         localStorage.removeItem('sl-api-token');

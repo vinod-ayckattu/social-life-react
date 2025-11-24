@@ -7,10 +7,10 @@ import Navbar from "./components/Navbar";
 import About from './components/About';
 import Register from './components/Register';
 import Login from './components/Login';
+import GlobalProvider from './context/GlobalProvider';
 
 function App() {
   const [posts, setPosts] = useState([]);
-  const userContext = createContext();
   useEffect(() => {
     axios.get('http://127.0.0.1:8000/api/posts')
       .then((res) => setPosts(res.data.posts))
@@ -19,6 +19,7 @@ function App() {
 
 
   return (
+    <GlobalProvider>
     <Router>
 
       {/* NAVBAR ALWAYS VISIBLE */}
@@ -54,6 +55,7 @@ function App() {
       </Routes>
 
     </Router>
+    </GlobalProvider>
   );
 }
 

@@ -7,6 +7,7 @@ export default function Login() {
     const navigate = useNavigate();
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [error, setError] = useState('');
 
     const formData = new FormData();
 
@@ -14,12 +15,22 @@ export default function Login() {
     formData.append("password", password);
 
     const handleSubmit = () => {
+        setError('');
         axios.post('http://127.0.0.1:8000/api/users/auth/store', formData)
         .then((res) => {
-            localStorage.setItem('sl-api-token', res.data.user.token);  
-            navigate("/");
+            if(res.data.status == 200){
+                localStorage.setItem('sl-api-token', res.data.token);  
+                navigate("/");
+            }
+            else{
+                setError(res.data.message);
+            }
+           
         })
-        .catch(err => console.error(err));
+        .catch((err) => {
+            console.log(err);
+            
+        });
     };
     return (
         <div className='container d-flex justify-content-center w-100'>
@@ -27,6 +38,7 @@ export default function Login() {
                 <div className="card text-start my-2 ">
                     <div className="card-header">Login</div>
                     <div className="card-body d-flex flex-column">
+                        <div className="text-danger">{error}</div>
                         <div className="form-group my-2"><input type="email" className="form-control" name="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}/></div>
                         <div className="form-group my-2"><input type="password" id="password" className="form-control" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/></div>
                         <div className="form-group"><button className="btn btn-success" onClick={handleSubmit}>Sign In</button></div>

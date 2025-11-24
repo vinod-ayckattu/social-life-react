@@ -19,7 +19,7 @@ export default function Register() {
     const handleSubmit = () => {
         axios.post('http://127.0.0.1:8000/api/users/store', formData)
         .then((res) => { 
-            localStorage.setItem('sl-api-token', res.data.user.token);  
+            localStorage.setItem('sl-api-token', res.data.token);   
             
             navigate("/");
         })
