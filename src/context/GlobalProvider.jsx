@@ -5,20 +5,33 @@ import { useState } from "react";
 export default function GlobalProvider({ children }) {
 
     const token = localStorage.getItem('sl-api-token');
-    const [message, setMessage] = useState('');
+    
 
-    const followInfluencer = (creatorId) => {
-    setMessage('');
-    axios.post("http://127.0.0.1:8000/api/follow", {'creator_id': creatorId}, 
-            { headers: { Authorization: `Bearer ${token}` }
-            }).then((res)=> {
-                //console.log(res);
-                setMessage(res.data.message);
-            });
-    return message;
+    const followInfluencer = async (creatorId) => {
+    
+        const res = await axios.post(
+            "http://127.0.0.1:8000/api/follow",
+            { creator_id: creatorId },
+            { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+
+        return res.data.message; // return actual result
+    }
+
+    const unFollowInfluencer = async (creatorId) => {
+    
+        const res = await axios.post(
+            "http://127.0.0.1:8000/api/unfollow",
+            { creator_id: creatorId },
+            { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+
+        return res.data.message; // return actual result
     }
     return (
-        <GlobalContext.Provider value={{ followInfluencer }}>
+        <GlobalContext.Provider value={{ followInfluencer, unFollowInfluencer }}>
         {children}
         </GlobalContext.Provider>
     );
