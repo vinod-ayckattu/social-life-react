@@ -19,6 +19,7 @@ export default function Navbar() {
       <Link to="/about" className="text-white">About</Link>
       { token ? (
         <>
+            <Link to="/my-profile" className="text-white">My Profile</Link>
             <a href="#" onClick={handleLogout} className="text-white">Logout</a>
         </>
         ) : (

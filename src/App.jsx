@@ -13,11 +13,12 @@ function App() {
   const { followInfluencer, unFollowInfluencer } = useContext(GlobalContext);
   const [posts, setPosts] = useState([]);
   const token = localStorage.getItem('sl-api-token');
+  const [change, setChange] = useState(true);
   useEffect(() => {
     axios.get('http://127.0.0.1:8000/api/posts',  { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => setPosts(res.data.posts))
       .catch(err => console.error(err));
-  },[]);
+  },[change]);
 
 
   return (
@@ -42,9 +43,9 @@ function App() {
                       <h6>{post.user.name}</h6>
                     </Link>
                     {post.user.is_influencer.length > 0 ? (
-                      <button onClick={() => unFollowInfluencer(post.user.id) } className="btn btn-sm btn-danger rounded-0 fw-bold">Unfollow</button>
+                      <button onClick={() => {unFollowInfluencer(post.user.id); setChange(!change);}} className="btn btn-sm btn-danger rounded-0 fw-bold">Unfollow</button>
                     ) : (
-                      <button onClick={() => followInfluencer(post.user.id) } className="btn btn-sm btn-success rounded-0 fw-bold">Follow</button>
+                      <button onClick={() => {followInfluencer(post.user.id); setChange(!change);}} className="btn btn-sm btn-success rounded-0 fw-bold">Follow</button>
                     )}
                     
                   </div>
