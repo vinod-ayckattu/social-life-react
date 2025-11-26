@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import About from './components/About';
 import Register from './components/Register';
 import Login from './components/Login';
+import MyProfile from './components/MyProfile';
 import { GlobalContext } from './context/GlobalContext';
 
 
@@ -59,6 +60,7 @@ function App() {
         />
 
         {/* User Profile */}
+        <Route path="/my-profile" element={<MyProfile />} />
         <Route path="/user/:id" element={<UserProfile />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />

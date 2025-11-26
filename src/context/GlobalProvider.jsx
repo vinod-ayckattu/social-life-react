@@ -1,6 +1,6 @@
 import axios from "axios";
 import { GlobalContext } from "./GlobalContext";
-import { useState } from "react";
+
 
 export default function GlobalProvider({ children }) {
 
