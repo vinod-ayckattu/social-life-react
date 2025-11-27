@@ -13,7 +13,7 @@ export default function MyProfile() {
         })
         .then(res => setUser(res.data.user))
         .catch(err => console.error(err));
-    },[post]); // run only once
+    },[post]); 
 
     const handlePost = async () => {
         const res = await axios.post("http://127.0.0.1:8000/api/posts/store",
